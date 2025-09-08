@@ -4,9 +4,6 @@ from dotenv import load_dotenv
 import json
 from pymongo import MongoClient
 
-#url = "https://cat-fact.herokuapp.com"
-#url = "https://csfloat.com/api/v1/listings/<ID>"
-base_url = "https://pokeapi.co/api/v2/"
 cs_base_url = "https://csfloat.com/api/v1/listings"
 
 def get_float_info(name):
@@ -24,6 +21,3 @@ def get_float_info(name):
         print(f"Failed to retrieve data {response.status_code}")
     return cs_base_url
     pass
-
-get_float_info("check")
-
