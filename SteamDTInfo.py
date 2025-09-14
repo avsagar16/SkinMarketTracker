@@ -32,5 +32,6 @@ class SteamDTModel:
             print(f"Failed to retrieve data {response.status_code}")
         return cs_base_url
         pass
+
 model = SteamDTModel()
 model.get_float_info("check")

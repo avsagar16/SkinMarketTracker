@@ -34,18 +34,18 @@ class SteamInventoryModel:
             #print(data)
             #return data
             assets = inventory_data.get('assets', [])
-            print(assets)
+            print(f"Retrieved {len(assets)} assets from inventory.")
             return assets
         else:
             print(f"Failed to retrieve inventory: {response.status_code}")
         
         return None
 
-with open("config.json") as f:
-    config = json.load(f) #STEAM_ID
-STEAM_ID = config["STEAM_ID"]
-steam_inventory_model = SteamInventoryModel(steam_id=STEAM_ID)
-steam_inventory_model.get_steam_inventory(STEAM_ID)
+#with open("config.json") as f:
+    #config = json.load(f) #STEAM_ID
+#STEAM_ID = config["STEAM_ID"]
+##steam_inventory_model = SteamInventoryModel(steam_id=STEAM_ID)
+#steam_inventory_model.get_steam_inventory(STEAM_ID)
 
 #get_float_info("check")
 

@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
 import json
+from SteamInfo import SteamInventoryModel
+from processor import Processor
 
 app = FastAPI()
 app.add_middleware(
@@ -28,10 +30,29 @@ async def process_input(request: Request):
         timestamp = body.get("timestamp", "")
         
         print(f"Processing: '{user_input}'")
+        if Processor.verify_steam_id(user_input): #check if input is a valid steam id
+            print("Valid Steam ID detected.")
+            steam_model = SteamInventoryModel(steam_id=user_input)
+            inventory = steam_model.get_steam_inventory()
+
+            if inventory is not None:
+                return {
+                    "status": "success",
+                    "message": f"Inventory fetched for Steam ID: {user_input}",
+                    "timestamp": timestamp,
+                    "inventory": inventory
+                }
+            else:
+                return {
+                    "status": "error",
+                    "message": f"Failed to fetch inventory for Steam ID: {user_input}",
+                    "timestamp": timestamp
+                }
         
+        print(f"Invalid Steam ID '{user_input}'")
         return {
-            "status": "success",
-            "message": f"You typed: {user_input}",
+            "status": "error",
+            "message": f"You typed an invalid Steam ID: {user_input}",
             "timestamp": timestamp,
             "length": len(user_input)
         }
