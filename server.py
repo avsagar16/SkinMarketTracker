@@ -18,36 +18,41 @@ class InputData(BaseModel):
     timestamp: Optional[str] = None
 
 @app.post("/api/process")
-async def process_input(data: InputData):
+async def process_input(request: Request):
     try:
-        print(f"✅ Successfully received: {data}")
-        print(f"Input text: '{data.input}'")
-        print(f"Timestamp: {data.timestamp}")
+        # Get the raw JSON data
+        body = await request.json()
+        print(f"Received data: {body}")
+        
+        user_input = body.get("input", "")
+        timestamp = body.get("timestamp", "")
+        
+        print(f"Processing: '{user_input}'")
         
         return {
-            "status": "success", 
-            "message": f"You typed: {data.input}",
-            "received_timestamp": data.timestamp,
-            "length": len(data.input)
+            "status": "success",
+            "message": f"You typed: {user_input}",
+            "timestamp": timestamp,
+            "length": len(user_input)
         }
     except Exception as e:
-        print(f"❌ Error processing data: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+        print(f"Error: {e}")
+        return {"status": "error", "message": str(e)}
 
 # Add this to debug what's actually being received
-@app.middleware("http")
-async def debug_requests(request, call_next):
-    if request.method == "POST" and "/api/process" in str(request.url):
-        body = await request.body()
-        print(f"🔍 Raw request body: {body}")
-        try:
-            json_body = json.loads(body)
-            print(f"🔍 Parsed JSON: {json_body}")
-        except:
-            print("❌ Could not parse JSON from request body")
+#@app.middleware("http")
+#async def debug_requests(request, call_next):
+    #if request.method == "POST" and "/api/process" in str(request.url):
+    #    body = await request.body()
+    #    print(f"Raw request body: {body}")
+    #    try:
+    #        json_body = json.loads(body)
+    #       print(f"Parsed JSON: {json_body}")
+    #    except:
+    #       print("Could not parse JSON from request body")
     
-    response = await call_next(request)
-    return response
+    #response = await call_next(request)
+    #return response
 
 @app.get("/")
 async def root():
