@@ -10,12 +10,12 @@ def get_float_info(name):
     with open("config.json") as f:
         config = json.load(f)
     
-    API_KEY = config["API_KEY"]
+    API_KEY = config["CSFLOAT_API_KEY"]
     headers = {"Authorization": API_KEY}
     response = requests.get(cs_base_url, headers = headers)
     if response.status_code == 200:
         data = response.json()
-        print(data)
+        #print(data)
         return data
     else:
         print(f"Failed to retrieve data {response.status_code}")
