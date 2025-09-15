@@ -57,11 +57,11 @@ class SteamInventoryModel:
             return []
         
         assets = inventory_data.get('assets', [])
-        with open("inventory_assets.json", "w") as f:
-            json.dump(assets, f, indent=4)
+        #with open("inventory_assets.json", "w") as f:
+            #json.dump(assets, f, indent=4)
         descriptions = inventory_data.get('descriptions', [])
-        with open("inventory_description.json", "w") as f:
-            json.dump(descriptions, f, indent=4)
+        #with open("inventory_description.json", "w") as f:
+            #json.dump(descriptions, f, indent=4)
         
         # Create lookup dictionary for descriptions
         desc_lookup = {}
@@ -90,6 +90,7 @@ class SteamInventoryModel:
                 }
                 items.append(item)
         items = self.group_all_items_simple(items)
+        print(f"Found {len(items)} marketable items in inventory.")
         return items
     
     def group_all_items_simple(self, items):
@@ -111,12 +112,10 @@ class SteamInventoryModel:
         
         return list(item_groups.values())
 
-with open("config.json") as f:
-    config = json.load(f) #STEAM_ID
-STEAM_ID = config["STEAM_ID"]
-steam_inventory_model = SteamInventoryModel(steam_id=STEAM_ID)
-inventory = steam_inventory_model.get_all_market_hash_names()
-with open("latest_inventory.json", "w") as f:
-    json.dump(inventory, f, indent=4)
+#with open("config.json") as f:
+    #config = json.load(f) #STEAM_ID
+#STEAM_ID = config["STEAM_ID"]
+#steam_inventory_model = SteamInventoryModel(steam_id=STEAM_ID)
+#inventory = steam_inventory_model.get_all_market_hash_names()
 #get_float_info("check")
 

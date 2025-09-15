@@ -33,7 +33,7 @@ async def process_input(request: Request):
         if Processor.verify_steam_id(user_input): #check if input is a valid steam id
             print("Valid Steam ID detected.")
             steam_model = SteamInventoryModel(steam_id=user_input)
-            inventory = steam_model.get_steam_inventory()
+            inventory = steam_model.get_all_market_hash_names()
 
             if inventory is not None:
                 return {
