@@ -21,10 +21,14 @@ const CounterStrikeSkinTracker = () => {
     try {
       // Replace with your actual backend URL
       const response = await fetch('http://localhost:8000/api/process', {
-        method: 'GET',
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
         },
+        body: JSON.stringify({
+            input: steamId.trim(),
+            timestamp: new Date().toISOString()
+        })
       });
 
       if (!response.ok) {
