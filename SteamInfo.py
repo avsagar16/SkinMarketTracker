@@ -2,7 +2,6 @@ import requests
 #import os
 from dotenv import load_dotenv
 import json
-from pymongo import MongoClient
 
 #url = "https://cat-fact.herokuapp.com"
 #url = "https://csfloat.com/api/v1/listings/<ID>"
@@ -32,11 +31,7 @@ class SteamInventoryModel:
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             inventory_data = response.json()
-            #print(data)
-            #return data
             assets = inventory_data.get('assets', [])
-            #with open("latest_inventory.json", "w") as f:
-                #json.dump(assets, f, indent=4)
             print(f"Retrieved {len(assets)} assets from inventory.")
             return inventory_data
         else:
@@ -57,11 +52,7 @@ class SteamInventoryModel:
             return []
         
         assets = inventory_data.get('assets', [])
-        #with open("inventory_assets.json", "w") as f:
-            #json.dump(assets, f, indent=4)
         descriptions = inventory_data.get('descriptions', [])
-        #with open("inventory_description.json", "w") as f:
-            #json.dump(descriptions, f, indent=4)
         
         # Create lookup dictionary for descriptions
         desc_lookup = {}

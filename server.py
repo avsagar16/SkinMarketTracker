@@ -34,6 +34,8 @@ async def process_input(request: Request):
             print("Valid Steam ID detected.")
             steam_model = SteamInventoryModel(steam_id=user_input)
             inventory = steam_model.get_all_market_hash_names()
+            with open('json_outputs/latest_inventory.json', 'w') as f:
+                json.dump(inventory, f, indent=4)
 
             if inventory is not None:
                 return {
