@@ -11,6 +11,7 @@ class SteamInventoryModel:
         self.steam_id = steam_id
         self.app_id = app_id
         self.context_id = context_id
+        self.market_hash_names = []
 
         pass
     
@@ -39,7 +40,7 @@ class SteamInventoryModel:
         
         return None
     
-    def get_all_market_hash_names(self):
+    def get_all_inventory_info(self):
         """
         Get market_hash_name for all marketable items in a Steam inventory
         
@@ -100,13 +101,16 @@ class SteamInventoryModel:
             else:
                 # Store the item (copy to avoid reference issues)
                 item_groups[market_hash_name] = item.copy()
+                self.market_hash_names.append(market_hash_name) # Add to market_hash_names list for batch price fetching
+                # Ensure amount is set correctly
         
         return list(item_groups.values())
+    
 
 #with open("config.json") as f:
     #config = json.load(f) #STEAM_ID
 #STEAM_ID = config["STEAM_ID"]
 #steam_inventory_model = SteamInventoryModel(steam_id=STEAM_ID)
-#inventory = steam_inventory_model.get_all_market_hash_names()
-#get_float_info("check")
+#inventory = steam_inventory_model.get_all_inventory_info()
+#print((steam_inventory_model.market_hash_names))
 

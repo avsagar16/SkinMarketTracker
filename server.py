@@ -33,7 +33,7 @@ async def process_input(request: Request):
         if Processor.verify_steam_id(user_input): #check if input is a valid steam id
             print("Valid Steam ID detected.")
             steam_model = SteamInventoryModel(steam_id=user_input)
-            inventory = steam_model.get_all_market_hash_names()
+            inventory = steam_model.get_all_inventory_info()
             with open('json_outputs/latest_inventory.json', 'w') as f: #save inventory contents to json file
                 json.dump(inventory, f, indent=4)
 
